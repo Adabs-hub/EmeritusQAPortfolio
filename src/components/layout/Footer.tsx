@@ -9,7 +9,7 @@ const Footer = () => {
     },
     {
       name: 'GitHub',
-      url: 'https://github.com/adabogoemmanuel',
+      url: 'https://github.com/Adabs-hub',
       icon: '🐙'
     },
     {

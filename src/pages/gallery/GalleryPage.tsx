@@ -14,6 +14,8 @@ import ImageModal from '../../components/common/ImageModal';
 import { AdvancedSearch } from '../../components/gallery/AdvancedSearch';
 import { PhotoListView } from '../../components/gallery/PhotoListView';
 import { useGallerySearch } from '../../hooks/useGallerySearch';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
 
 const GalleryPage: React.FC = () => {
   const [categories, setCategories] = useState<GalleryCategory[]>([]);
@@ -124,6 +126,8 @@ const GalleryPage: React.FC = () => {
           <meta name="description" content="Photo gallery showcasing QA projects and team events" />
         </Helmet>
         
+        <Header />
+        
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary-600 mx-auto mb-4"></div>
@@ -131,6 +135,8 @@ const GalleryPage: React.FC = () => {
             <p className="text-gray-600 dark:text-gray-400 mt-2">Please wait while we fetch your photos...</p>
           </div>
         </div>
+        
+        <Footer />
       </div>
     );
   }
@@ -138,6 +144,8 @@ const GalleryPage: React.FC = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <Header />
+        
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center max-w-md mx-auto">
             <div className="text-6xl mb-4">😞</div>
@@ -152,6 +160,8 @@ const GalleryPage: React.FC = () => {
             </button>
           </div>
         </div>
+        
+        <Footer />
       </div>
     );
   }
@@ -164,29 +174,220 @@ const GalleryPage: React.FC = () => {
         <meta name="keywords" content="Personal Gallery, Life Events, Celebrations, Family Moments, Memories" />
       </Helmet>
 
-      <div className="container-max section-padding">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <motion.h1 
-            className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+      <Header />
+
+      {/* Creative Interactive Gallery Hero */}
+      <div className="relative pt-20 pb-12 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50 dark:from-gray-900 dark:via-gray-800/50 dark:to-gray-900">
+        
+        {/* Dynamic Photo Mosaic Background */}
+        {allPhotos.length > 0 && (
+          <div className="absolute inset-0 opacity-10 dark:opacity-5">
+            <div className="grid grid-cols-8 md:grid-cols-12 gap-1 h-full w-full">
+              {Array.from({ length: 96 }, (_, i) => {
+                const photo = allPhotos[i % allPhotos.length];
+                return photo ? (
+                  <motion.div
+                    key={i}
+                    className="bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-800 dark:to-purple-800 rounded-sm"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 0.6, scale: 1 }}
+                    transition={{ duration: 0.5, delay: i * 0.01 }}
+                  />
+                ) : (
+                  <div key={i} className="bg-gray-200/50 dark:bg-gray-700/30 rounded-sm" />
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Floating Photo Previews */}
+        {allPhotos.slice(0, 6).map((photo, index) => (
+          <motion.div
+            key={photo.id}
+            className="absolute hidden lg:block cursor-pointer"
+            style={{
+              left: `${10 + (index % 3) * 30}%`,
+              top: `${20 + Math.floor(index / 3) * 40}%`,
+            }}
+            initial={{ opacity: 0, y: 50, rotate: Math.random() * 20 - 10 }}
+            animate={{ 
+              opacity: 0.15, 
+              y: 0, 
+              rotate: Math.random() * 20 - 10,
+              x: Math.sin(Date.now() / 1000 + index) * 10
+            }}
+            transition={{ 
+              duration: 1.5, 
+              delay: index * 0.2,
+              x: {
+                repeat: Infinity,
+                duration: 3 + index,
+                ease: "easeInOut"
+              }
+            }}
+            whileHover={{ opacity: 0.3, scale: 1.1, rotate: 0 }}
+            onClick={() => openModal(photo)}
           >
-            My <span className="text-gradient">Gallery</span>
-          </motion.h1>
-          <motion.p 
-            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            A visual journey through life's special moments, celebrations, family events, and cherished memories
-          </motion.p>
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl shadow-lg overflow-hidden border-2 border-white/50 dark:border-gray-600/50 backdrop-blur-sm">
+              <ProgressiveImage
+                photo={photo}
+                quality="thumbnail"
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+          </motion.div>
+        ))}
+
+        {/* Main Hero Content */}
+        <div className="container-max section-padding relative z-20">
+          <div className="text-center max-w-5xl mx-auto">
+            
+            {/* Animated Badge with Story */}
+            <motion.div
+              className="inline-flex items-center px-6 py-3 mb-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-full shadow-lg border border-white/50 dark:border-gray-700/50"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <motion.span 
+                className="text-2xl mr-3"
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                📷
+              </motion.span>
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                {allPhotos.length > 0 ? `${allPhotos.length} Memories Captured` : 'My Visual Story'}
+              </span>
+              {categories.length > 0 && (
+                <>
+                  <span className="mx-2 text-gray-400">•</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    {categories.length} Collections
+                  </span>
+                </>
+              )}
+            </motion.div>
+
+            {/* Dynamic Title Based on Content */}
+            <motion.h1 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <span className="block text-gray-900 dark:text-white">
+                Life Through
+              </span>
+              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-black">
+                My Lens
+              </span>
+            </motion.h1>
+
+            {/* Dynamic Description */}
+            <motion.p 
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              {allPhotos.length > 0 ? (
+                <>
+                  From professional milestones to personal celebrations, explore{' '}
+                  <strong>{allPhotos.length} memories</strong> across{' '}
+                  <strong>{categories.length} unique collections</strong> that tell the story of my journey
+                </>
+              ) : (
+                "A visual journey through moments that matter - professional achievements, personal milestones, and everything in between"
+              )}
+            </motion.p>
+
+            {/* Interactive Stats with Hover Effects */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              {categories.slice(0, 3).map((category) => (
+                <motion.div
+                  key={category.name}
+                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  onClick={() => {
+                    setFilters({
+                      ...filters,
+                      selectedCategories: [category.name]
+                    });
+                  }}
+                >
+                  <div className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {category.photos.length}
+                  </div>
+                  <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 truncate">
+                    {category.name}
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    Click to explore →
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Call to Action */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <motion.button
+                className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  const element = document.querySelector('[data-gallery-start]');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                <span>Start Exploring</span>
+                <motion.span
+                  className="text-xl"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  🚀
+                </motion.span>
+              </motion.button>
+
+              {allPhotos.length > 0 && (
+                <motion.button
+                  className="group text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium px-6 py-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all duration-300 flex items-center space-x-2"
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => {
+                    if (allPhotos.length > 0) {
+                      const randomPhoto = allPhotos[Math.floor(Math.random() * allPhotos.length)];
+                      openModal(randomPhoto);
+                    }
+                  }}
+                >
+                  <span>Surprise Me</span>
+                  <span className="text-lg group-hover:animate-spin">🎲</span>
+                </motion.button>
+              )}
+            </motion.div>
+          </div>
         </div>
+      </div>
+
+      <div className="container-max section-padding">
 
         {/* Advanced Search and Filter Controls */}
         <motion.div 
+          data-gallery-start
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -449,6 +650,8 @@ const GalleryPage: React.FC = () => {
         onPrevious={() => navigateToPhoto('previous')}
         onNext={() => navigateToPhoto('next')}
       />
+
+      <Footer />
     </div>
   );
 };

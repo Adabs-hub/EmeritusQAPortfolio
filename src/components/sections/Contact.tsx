@@ -87,8 +87,8 @@ const Contact = () => {
     {
       icon: '🐙',
       title: 'GitHub',
-      value: 'github.com/adabogoemmanuel',
-      link: 'https://github.com/adabogoemmanuel',
+      value: 'github.com/Adabs-hub',
+      link: 'https://github.com/Adabs-hub',
       description: 'Check out my code repositories'
     },
     {

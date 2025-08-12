@@ -57,7 +57,7 @@ npm run preview
 
 - **Email**: adabogoemmanuel@gmail.com
 - **LinkedIn**: [linkedin.com/in/adabogoemmanuel](https://linkedin.com/in/adabogoemmanuel)
-- **GitHub**: [github.com/adabogoemmanuel](https://github.com/adabogoemmanuel)
+- **GitHub**: [github.com/adabogoemmanuel](https://github.com/Adabs-hub)
 
 ### 📈 QA Philosophy
 

@@ -20,7 +20,7 @@ export const projectsData: Project[] = [
       automationRoi: '60% reduction in testing time'
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/selenium-framework'
+      github: 'https://github.com/Adabs-hub/selenium-framework'
     },
     images: ['selenium-framework.png'],
     featured: true
@@ -44,7 +44,7 @@ export const projectsData: Project[] = [
       performanceScore: 95
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/cypress-testing'
+      github: 'https://github.com/Adabs-hub/cypress-testing'
     },
     images: ['cypress-testing.png'],
     featured: true
@@ -68,7 +68,7 @@ export const projectsData: Project[] = [
       testCoverage: 92
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/api-testing-postman'
+      github: 'https://github.com/Adabs-hub/api-testing-postman'
     },
     images: ['postman-testing.png'],
     featured: true
@@ -91,7 +91,7 @@ export const projectsData: Project[] = [
       performanceScore: 88
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/jmeter-testing'
+      github: 'https://github.com/Adabs-hub/jmeter-testing'
     },
     images: ['jmeter-testing.png'],
     featured: false
@@ -115,7 +115,7 @@ export const projectsData: Project[] = [
       performanceScore: 91
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/playwright-testing'
+      github: 'https://github.com/Adabs-hub/playwright-testing'
     },
     images: ['playwright-testing.png'],
     featured: true
@@ -139,7 +139,7 @@ export const projectsData: Project[] = [
       bugsFound: 28
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/appium-testing'
+      github: 'https://github.com/Adabs-hub/appium-testing'
     },
     images: ['appium-testing.png'],
     featured: false
@@ -162,7 +162,7 @@ export const projectsData: Project[] = [
       automationRoi: '40% faster test setup'
     },
     links: {
-      github: 'https://github.com/adabogoemmanuel/test-data-management'
+      github: 'https://github.com/Adabs-hub/test-data-management'
     },
     images: ['test-data-management.png'],
     featured: false
